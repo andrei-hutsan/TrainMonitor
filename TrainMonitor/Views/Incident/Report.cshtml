@@ -1,0 +1,24 @@
+﻿@model Incident
+@{
+    ViewBag.Title = "Report Incident";
+}
+
+<h3>Report Incident</h3>
+
+<form method="post">
+    <input type="hidden" name="trainId" value="@ViewBag.TrainId" />
+
+    <div class="mb-3">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Reason"></label>
+        <input asp-for="Reason" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>

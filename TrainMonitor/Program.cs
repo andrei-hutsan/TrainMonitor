@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TrainMonitor.Data;
+using TrainMonitor.Models;
+using TrainMonitor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
+);
+
+builder.Services.AddHostedService<TrainBackgroundUpdater>();
 
 var app = builder.Build();
 
@@ -30,8 +36,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapRazorPages();
+    pattern: "{controller=Train}/{action=Index}/{id?}"
+);
 
 app.Run();
