@@ -1,35 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrainMonitor.Data;
+using TrainMonitor.Interfaces;
 
 namespace TrainMonitor.Controllers
 {
     public class TrainController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ITrainRepository _trainRepository;
 
-        public TrainController(AppDbContext context)
+        public TrainController(ITrainRepository trainRepository)
         {
-            _context = context;
+            _trainRepository = trainRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var trains = await _context.Trains
-                .Include(t => t.Incidents)
-                .AsNoTracking()
-                .ToListAsync();
-
+            var trains = await _trainRepository.GetAll();
             return View(trains);
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var train = await _context.Trains
-                .Include(t => t.Incidents)
-                .FirstOrDefaultAsync(t => t.Id == id);
+            if (id.Equals(null) || id == Guid.Empty)
+                return BadRequest();
 
-            if (train == null) return NotFound();
+            var train = await _trainRepository.GetById(id);
+
+            if (train == null) 
+                return NotFound();
 
             return View(train);
         }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TrainMonitor.Data;
+using TrainMonitor.Interfaces;
 using TrainMonitor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
 );
+
+builder.Services.AddScoped<ITrainRepository, TrainRepository>();
+builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
 
 builder.Services.AddHostedService<TrainBackgroundUpdater>();
 

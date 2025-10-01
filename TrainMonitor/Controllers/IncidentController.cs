@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TrainMonitor.Data;
+using TrainMonitor.Interfaces;
 using TrainMonitor.Models;
 
 namespace TrainMonitor.Controllers
 {
     public class IncidentController : Controller
     {
+        private readonly IIncidentRepository _incidentRepository;
 
-        private readonly AppDbContext _context;
-
-        public IncidentController(AppDbContext context)
+        public IncidentController(IIncidentRepository incidentRepository)
         {
-            _context = context;
+            _incidentRepository = incidentRepository;
         }
 
         [HttpGet]
@@ -30,8 +30,9 @@ namespace TrainMonitor.Controllers
             incident.TrainId = trainId;
             incident.Timestamp = DateTime.Now;
 
-            _context.Incidents.Add(incident);
-            await _context.SaveChangesAsync();
+            var result = await _incidentRepository.AddReport(incident);
+            if (!result)
+                return View(incident);
 
             return RedirectToAction("Details", "Train", new { id = trainId });
         }
