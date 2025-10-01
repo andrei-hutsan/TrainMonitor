@@ -20,6 +20,7 @@
             var rowClass = train.DelayMinutes > 10 ? "table-danger" : "";
             var hasIncidents = train.Incidents?.Any() ?? false;
             <tr class="@rowClass">
+
                 <td>@train.Name</td>
                 <td>@train.Number</td>
                 <td>@(train.DelayMinutes ?? 0) min</td>

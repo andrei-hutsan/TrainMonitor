@@ -17,7 +17,9 @@ namespace TrainMonitor.Controllers
         {
             var trains = await _context.Trains
                 .Include(t => t.Incidents)
+                .AsNoTracking()
                 .ToListAsync();
+
             return View(trains);
         }
 

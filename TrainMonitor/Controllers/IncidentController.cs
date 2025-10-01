@@ -15,7 +15,7 @@ namespace TrainMonitor.Controllers
         }
 
         [HttpGet]
-        public IActionResult Report(int trainId)
+        public IActionResult Report(Guid trainId)
         {
             ViewBag.TrainId = trainId;
             return View();

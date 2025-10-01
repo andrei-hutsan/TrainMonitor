@@ -21,7 +21,7 @@ namespace TrainMonitor.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 await UpdateTrainsAsync();
-                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
         }
 
@@ -55,7 +55,6 @@ namespace TrainMonitor.Services
                 {
                     var trainNum = trainData.ReturnValue.Train;
                     var train = await context.Trains.FirstOrDefaultAsync(t => t.Number == trainNum);
-
                     if (train == null)
                     {
                         context.Trains.Add(new Train
@@ -64,17 +63,14 @@ namespace TrainMonitor.Services
                             Number = trainData.ReturnValue.Train,
                             DelayMinutes = trainData.ReturnValue.ArrivingTime,
                             NextStop = trainData.ReturnValue.NextStopObj?.Title ?? "-",
-                            LastUpdated = trainData.ReturnValue.UpdaterTimeStamp
+                            LastUpdated = DateTime.Now
                         });
-                        _logger.LogInformation("[Updater] Inserted train: {Name} ({Number})", trainData.Name, trainNum);
                     }
                     else
                     {
                         train.DelayMinutes = trainData.ReturnValue.ArrivingTime;
                         train.NextStop = trainData.ReturnValue.NextStopObj?.Title ?? "-";
-                        train.LastUpdated = trainData.ReturnValue.UpdaterTimeStamp;
-
-                        _logger.LogInformation("[Updater] Updated train: {Name} ({Number})", trainData.Name, trainNum);
+                        train.LastUpdated = DateTime.Now;
                     }
                 }
 
