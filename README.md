@@ -29,6 +29,9 @@ The project simulates real-time updates by periodically parsing a provided JSON 
   - Controller tests
 - **GitHub Actions CI**
   - Build, restore, and run unit tests automatically
+- **Docker**
+  - Implement Docker Containerization, to run from different machines
+  - [Docker image in DockerHub](https://hub.docker.com/r/andreihutsan/trainmonitor)
 
 ---
 
@@ -44,6 +47,7 @@ The project simulates real-time updates by periodically parsing a provided JSON 
   - [EF Core InMemory provider](https://learn.microsoft.com/en-us/ef/core/testing/)  
   - [Moq](https://github.com/moq/moq4)  
 - **CI/CD**: [GitHub Actions](https://docs.github.com/en/actions)
+- **Docker**: [Docker](https://www.docker.com/)
 
 ---
 
@@ -73,5 +77,21 @@ TrainMonitor.Tests/
 ├── ControllersTests/ # xUnit tests for controllers
 
 └── ServicesTests/ # xUnit tests for repositories
+
+## UI
+
+**Trains Table with info**
+
+<img width="1823" height="918" alt="image" src="https://github.com/user-attachments/assets/4caf44e7-b54a-4cf9-828f-dbc49236607b" />
+
+**Report Page with field validation**
+
+<img width="1728" height="933" alt="image" src="https://github.com/user-attachments/assets/498d8379-6d42-4a7d-bf9b-b241b8c0db3d" />
+
+**Train details**
+
+<img width="939" height="839" alt="image" src="https://github.com/user-attachments/assets/ab520520-1320-4585-a5ff-ea3d8218bb2f" />
+
+
 
 
