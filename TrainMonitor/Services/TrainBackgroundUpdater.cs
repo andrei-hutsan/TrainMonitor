@@ -21,7 +21,7 @@ namespace TrainMonitor.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 await UpdateTrainsAsync();
-                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
             }
         }
 

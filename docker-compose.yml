@@ -1,0 +1,30 @@
+services:
+  trainmonitor:
+    build:
+      context: ./TrainMonitor
+      dockerfile: Dockerfile
+    container_name: trainmonitor-web
+    depends_on:
+      - mariadb
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=server=mariadb;port=3306;database=trainmonitor;user=appuser;password=apppass
+    ports:
+      - "8080:8080"
+
+  mariadb:
+    image: mariadb:11
+    container_name: trainmonitor-db
+    restart: always
+    environment:
+      MARIADB_DATABASE: trainmonitor
+      MARIADB_USER: appuser
+      MARIADB_PASSWORD: apppass
+      MARIADB_ROOT_PASSWORD: rootpass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

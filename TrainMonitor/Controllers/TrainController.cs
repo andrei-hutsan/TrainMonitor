@@ -27,10 +27,17 @@ namespace TrainMonitor.Controllers
 
             var train = await _trainRepository.GetById(id);
 
-            if (train == null) 
+            if (train == null)
                 return NotFound();
 
             return View(train);
         }
+
+        public async Task<IActionResult> TrainTable()
+        {
+            var trains = await _trainRepository.GetAll();
+            return PartialView("_TrainTablePartial", trains);
+        }
+
     }
 }

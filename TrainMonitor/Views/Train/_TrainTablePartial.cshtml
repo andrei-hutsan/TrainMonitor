@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Train>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Delay</th>
+            <th>Next Stop</th>
+            <th>Last Update</th>
+            <th>Incidents</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var train in Model)
+        {
+            var rowClass = train.DelayMinutes > 10 ? "table-danger" : "";
+            var hasIncidents = train.Incidents?.Any() ?? false;
+
+            <tr class="@rowClass">
+                <td>@train.Name</td>
+                <td>@train.Number</td>
+                <td>@(train.DelayMinutes ?? 0) min</td>
+                <td>@train.NextStop</td>
+                <td>@train.LastUpdated.ToLocalTime().ToString("HH:mm:ss")</td>
+                <td>@(hasIncidents ? "❗" : "-")</td>
+                <td>
+                    <a asp-controller="Train" asp-action="Details" asp-route-id="@train.Id" class="btn btn-info btn-sm">Details</a>
+                    @if (train.DelayMinutes > 0)
+                    {
+                        <a asp-controller="Incident" asp-action="Report" asp-route-trainId="@train.Id" class="btn btn-warning btn-sm">Report</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
