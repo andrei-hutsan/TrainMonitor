@@ -20,13 +20,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore TrainMonitor/TrainMonitor.csproj
+        run: dotnet restore TrainMonitor.sln
 
       - name: Build
-        run: dotnet build TrainMonitor/TrainMonitor.csproj --no-restore --configuration Release
+        run: dotnet build TrainMonitor.sln --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test TrainMonitor.Tests/TrainMonitor.Tests.csproj --no-build --configuration Release --verbosity normal
+        run: dotnet test TrainMonitor.sln --no-build --configuration Release --verbosity normal
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
