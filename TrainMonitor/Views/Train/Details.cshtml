@@ -1,25 +1,50 @@
 ﻿@model Train
 
-<h3>Train: @Model.Name (@Model.Number)</h3>
-<p><strong>Next Stop:</strong> @Model.NextStop</p>
-<p><strong>Delay:</strong> @(Model.DelayMinutes ?? 0) minutes</p>
-<p><strong>Last Updated:</strong> @Model.LastUpdated.ToLocalTime()</p>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 50%; max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">
+                Train: @Model.Name (@Model.Number)
+            </h3>
 
-<h4>Incident History</h4>
-@if (Model.Incidents.Any())
-{
-    <ul class="list-group">
-        @foreach (var incident in Model.Incidents)
-        {
-            <li class="list-group-item">
-                <strong>@incident.Username</strong>: @incident.Reason <br />
-                <em>@incident.Comment</em> <br />
-                <small>@incident.Timestamp.ToLocalTime()</small>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p>No incidents reported.</p>
-}
+            <p><strong>Next Stop:</strong> <span class="text-primary">@Model.NextStop</span></p>
+            <p>
+                <strong>Delay:</strong>
+                @if (Model.DelayMinutes > 10)
+                {
+                    <span class="badge bg-danger">@Model.DelayMinutes min</span>
+                }
+                else if (Model.DelayMinutes > 0)
+                {
+                    <span class="badge bg-warning">@Model.DelayMinutes min</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">On time</span>
+                }
+            </p>
+            <p><strong>Last Updated:</strong> @Model.LastUpdated.ToLocalTime().ToString("HH:mm:ss")</p>
+
+            <hr />
+
+            <h4 class="mb-3">Incident History</h4>
+            @if (Model.Incidents.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var incident in Model.Incidents)
+                    {
+                        <li class="list-group-item">
+                            <strong>@incident.Username</strong> — <span class="text-danger">@incident.Reason</span><br />
+                            <em>@incident.Comment</em><br />
+                            <small class="text-muted">@incident.Timestamp.ToLocalTime()</small>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No incidents reported.</p>
+            }
+        </div>
+    </div>
+</div>

@@ -21,10 +21,32 @@
             <tr class="@rowClass">
                 <td>@train.Name</td>
                 <td>@train.Number</td>
-                <td>@(train.DelayMinutes ?? 0) min</td>
+                <td>
+                    @if (train.DelayMinutes <= 5)
+                    {
+                        <span class="badge bg-success">@train.DelayMinutes min</span>
+                    }
+                    else if (train.DelayMinutes <= 10)
+                    {
+                        <span class="badge bg-warning">@train.DelayMinutes min</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">@train.DelayMinutes min</span>
+                    }
+                </td>
                 <td>@train.NextStop</td>
                 <td>@train.LastUpdated.ToLocalTime().ToString("HH:mm:ss")</td>
-                <td>@(hasIncidents ? "❗" : "-")</td>
+                <td>
+                    @if (hasIncidents)
+                    {
+                        <span class="badge bg-danger">Incidents</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">None</span>
+                    }
+                </td>
                 <td>
                     <a asp-controller="Train" asp-action="Details" asp-route-id="@train.Id" class="btn btn-info btn-sm">Details</a>
                     @if (train.DelayMinutes > 0)
