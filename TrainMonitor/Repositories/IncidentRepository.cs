@@ -2,7 +2,7 @@
 using TrainMonitor.Interfaces;
 using TrainMonitor.Models;
 
-namespace TrainMonitor.Services
+namespace TrainMonitor.Repositories
 {
     public class IncidentRepository : IIncidentRepository
     {

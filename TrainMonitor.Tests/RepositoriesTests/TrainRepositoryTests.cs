@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainMonitor.Data;
 using TrainMonitor.Models;
-using TrainMonitor.Services;
+using TrainMonitor.Repositories;
 
 namespace TrainMonitor.Tests.ServicesTests
 {
